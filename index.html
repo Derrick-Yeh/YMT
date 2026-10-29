@@ -61,7 +61,7 @@ tbody tr{cursor:pointer}tbody tr:hover td{background:#f4f8fc}tr.on td{background
 .dnote{margin-top:5px;font-size:12px;color:#7a3e00;background:#fff4e6;border:1px solid #ffd8a8;border-radius:6px;padding:4px 8px;white-space:normal;text-align:left;font-weight:500}
 </style></head><body>
 <header><h1>YMT（ヤマト運輸）充電設備 日本站點分佈</h1><p>ETG-JP｜資料：站點清單 2026/10/23｜方案一排程依 YMT 回覆日程計畫表 2026/10/27 更新</p>
-<nav><a href="#overview" data-v="overview">全國總覽</a><a href="#prefs" data-v="prefs">重點都縣</a><a href="#list" data-v="list">站點清單</a><a href="#tokyo" data-v="tokyo">檢查排程方案一（A、B組）</a><a href="#tokyo-a" data-v="tokyo-a">檢查排程方案二（A組）</a></nav></header>
+<nav><a href="#overview" data-v="overview">全國總覽</a><a href="#prefs" data-v="prefs">各都縣</a><a href="#list" data-v="list">站點清單</a><a href="#tokyo" data-v="tokyo">檢查排程方案一（A、B組）</a><a href="#tokyo-a" data-v="tokyo-a">檢查排程方案二（A組）</a></nav></header>
 <main>
 <section id="v-overview">
  <div class="kpis" id="kpis"></div>
@@ -76,7 +76,7 @@ tbody tr{cursor:pointer}tbody tr:hover td{background:#f4f8fc}tr.on td{background
  <div class="pv">
   <div class="plist" id="plist"></div>
   <div class="card"><div class="phead"><div><h2 id="ptitle"></h2><div class="s" id="psub"></div></div><div class="pbtn"><button id="prev">‹ 上一個</button> <button id="next">下一個 ›</button></div></div><svg id="pmap"></svg>
-   <div class="note">重點都縣條件：10 台以上 或 2 站以上。相鄰站點的圓點會稍微錯開，避免重疊。</div></div>
+   <div class="note">列出全部有站點的都道府縣，依台數排序；標籤「重點」＝10 台以上或 2 站以上。相鄰站點的圓點會稍微錯開，避免重疊。</div></div>
   <div class="card sl"><h2>站點明細</h2><table><tbody id="ptb"></tbody></table></div>
  </div>
 </section>
@@ -184,15 +184,15 @@ enableZoom(document.getElementById('main'),document.querySelector('#v-overview .
 document.getElementById('leg').innerHTML='圓點＝台數：'+[1,5,10,20].map(v=>`<span style="display:inline-flex;align-items:center;gap:4px"><svg width="${Math.sqrt(v)*6.4+4}" height="${Math.sqrt(v)*6.4+4}"><circle cx="50%" cy="50%" r="${Math.sqrt(v)*3.2}" class="bub"/></svg>${v}</span>`).join('')+'　縣色：<span style="display:inline-block;width:80px;height:10px;border-radius:3px;background:linear-gradient(90deg,rgb(254,236,214),rgb(247,140,60))"></span> 少→多';
 document.getElementById('bars').innerHTML=prefRank.map(([p,v])=>`<div class="${KEY.includes(p)?'hl':''}"><span>${p}</span><i style="width:${v/maxP*100}%"></i><em>${v}台／${cnt[p]}站</em></div>`).join('');
 // prefs view
-let cur=0;
-document.getElementById('plist').innerHTML=KEY.map((p,j)=>`<button data-j="${j}"><span><b>${p}</b><small>${cnt[p]} 站｜${(byP[p]/total*100).toFixed(1)}%</small></span><span class="v">${byP[p]}<small style="display:inline;font-weight:400"> 台</small></span></button>`).join('');
+let cur=0;const PV=prefRank.map(x=>x[0]);
+document.getElementById('plist').innerHTML=PV.map((p,j)=>`<button data-j="${j}"><span><b>${p}</b><small>${cnt[p]} 站｜${(byP[p]/total*100).toFixed(1)}%</small></span><span class="v">${byP[p]}<small style="display:inline;font-weight:400"> 台</small></span></button>`).join('');
 document.querySelectorAll('#plist button').forEach(b=>b.onclick=()=>showPref(+b.dataset.j));
-document.getElementById('prev').onclick=()=>showPref((cur-1+KEY.length)%KEY.length);
-document.getElementById('next').onclick=()=>showPref((cur+1)%KEY.length);
-function showPref(j){cur=j;const p=KEY[j];
+document.getElementById('prev').onclick=()=>showPref((cur-1+PV.length)%PV.length);
+document.getElementById('next').onclick=()=>showPref((cur+1)%PV.length);
+function showPref(j){cur=j;const p=PV[j];
  document.querySelectorAll('#plist button').forEach(b=>b.classList.toggle('on',+b.dataset.j===j));
  const why=[byP[p]>=10?'≥10台':null,cnt[p]>=2?'≥2站':null].filter(Boolean).join('・');
- document.getElementById('ptitle').innerHTML=p+`<span class="badge">${why}</span>`;
+ document.getElementById('ptitle').innerHTML=p+(why?`<span class="badge">重點｜${why}</span>`:'');
  document.getElementById('psub').textContent=`${byP[p]} 台／${cnt[p]} 站｜佔總台數 ${(byP[p]/total*100).toFixed(1)}%`;
  const ss=S.filter(s=>s.pref===p).sort((a,b)=>b.n-a.n);
  const pp=D.prefs.find(q=>q.name===p);let pts=pp.pts;if(p==='東京都')pts=pts.filter(q=>q[1]>35.3);
