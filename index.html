@@ -9,7 +9,7 @@ h1{font-size:18px;margin:0}header p{margin:2px 0 8px;color:var(--mute);font-size
 nav{display:flex;gap:4px}nav a{padding:8px 16px;font-size:14px;color:var(--mute);text-decoration:none;border-bottom:3px solid transparent}
 nav a.on{color:var(--acc);border-color:var(--acc);font-weight:600}
 main{padding:16px 24px 32px;max-width:1400px;margin:0 auto}section{display:none}section.on{display:block}
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:14px}@media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpis{display:grid;grid-template-columns:1.7fr repeat(6,1fr);gap:12px;margin-bottom:14px}@media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}.kpi b{display:block;font-size:26px}.kpi span{font-size:12px;color:var(--mute)}
 .g2{display:grid;grid-template-columns:minmax(0,2fr) minmax(320px,1fr);gap:14px}@media(max-width:900px){.g2{grid-template-columns:1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}.card h2{font-size:15px;margin:0 0 10px}
@@ -60,7 +60,9 @@ tbody tr{cursor:pointer}tbody tr:hover td{background:#f4f8fc}tr.on td{background
 .zbtn{position:absolute;right:16px;top:44px;display:flex;flex-direction:column;gap:4px;z-index:2}.zbtn button{width:32px;height:32px;border:1px solid var(--line);background:#fff;border-radius:7px;font-size:16px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08)}.zbtn button:hover{background:#eef4fa}
 .bub.b1{fill:#2b8a3e}.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;font-weight:600;white-space:nowrap}.tag.o{background:#e7eef6;color:#1f4e79}.tag.b{background:#e6f4ea;color:#2b8a3e}
 .bars i.b{background:#2b8a3e}.bars .stk{display:flex;height:14px}.bars .stk i{border-radius:0}.bars .stk i:first-child{border-radius:3px 0 0 3px}.bars .stk i:last-child{border-radius:0 3px 3px 0}
-tr.sec td{background:#f4f4f1;font-weight:600;font-size:12px;cursor:default}.kpi.b{border-color:#b7dfc2;background:#f3faf5}.kpi.b b{color:#2b8a3e}
+tr.sec td{background:#f4f4f1;font-weight:600;font-size:12px;cursor:default}.kpi.all{background:#1f4e79;border-color:#1f4e79;color:#fff;display:flex;gap:18px;align-items:stretch}.kpi.all>div{flex:1}.kpi.all>div+div{border-left:1px solid rgba(255,255,255,.3);padding-left:16px}.kpi.all span{color:#d6e4f0}.kpi.all b{font-size:30px;white-space:nowrap}
+@media(max-width:1250px){.kpis{grid-template-columns:repeat(3,1fr)}.kpi.all{grid-column:1/-1}}@media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi.b{border-color:#b7dfc2;background:#f3faf5}.kpi.b b{color:#2b8a3e}
 .bchips{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}.bchips button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;font:inherit;text-align:left;min-width:190px}.bchips button b{display:block;font-size:18px}.bchips button small{color:var(--mute);font-size:12px}.bchips button.on{border-color:var(--acc);box-shadow:inset 0 -3px 0 var(--acc)}.bchips button.bb b{color:#2b8a3e}.bchips button.bb.on{border-color:#2b8a3e;box-shadow:inset 0 -3px 0 #2b8a3e}
 .dnote{margin-top:5px;font-size:12px;color:#7a3e00;background:#fff4e6;border:1px solid #ffd8a8;border-radius:6px;padding:4px 8px;white-space:normal;text-align:left;font-weight:500}
 </style></head><body>
@@ -162,7 +164,8 @@ function bubble(svg,s,x,y,r,label,num){const c=el('circle',{cx:x,cy:y,r,class:'b
  if(label){const t=el('text',{x:x+r+4,y:y+4,class:'lbl'},svg);t.textContent=label}return c}
 // KPIs
 const kn=KEY.reduce((a,p)=>a+byP[p],0);
-document.getElementById('kpis').innerHTML=[[S.length,'原有站點數（有地址）'],[total,'原有已定址台數'],[KEY.length+' 都縣',`重點都縣，合計 ${kn} 台（${(kn/total*100).toFixed(0)}%）`],[GM,'ＧＭ推進課（無地址）'],[SB.length+' 站／'+totalB+' 台','十月第一批出貨（1014 出荷指示）','b'],[Object.keys(byB).length+' 都府縣',`十月第一批涵蓋；與原有重複營業所 ${dupN.size} 處`,'b']].map(([v,t,c])=>`<div class="kpi ${c||''}"><b>${v}</b><span>${t}</span></div>`).join('');
+const uniqSites=new Set(ALL.map(s=>s.short)).size,allUnits=total+GM+totalB;
+document.getElementById('kpis').innerHTML=`<div class="kpi all"><div><b>${allUnits} 台</b><span>總台數（不分批次）<br>含ＧＭ推進課 ${GM} 台</span></div><div><b>${uniqSites} 站</b><span>營業站點（不分批次）<br>重複 ${dupN.size} 處只算一次</span></div></div>`+[[S.length,'原有站點數（有地址）'],[total,'原有已定址台數'],[KEY.length+' 都縣',`重點都縣，合計 ${kn} 台（${(kn/total*100).toFixed(0)}%）`],[GM,'ＧＭ推進課（無地址）'],[SB.length+' 站／'+totalB+' 台','十月第一批出貨（1014 出荷指示）','b'],[Object.keys(byB).length+' 都府縣',`十月第一批涵蓋；與原有重複營業所 ${dupN.size} 處`,'b']].map(([v,t,c])=>`<div class="kpi ${c||''}"><b>${v}</b><span>${t}</span></div>`).join('');
 // overview main
 const KB=[139.18,140.65,35.42,36.45];
 {const svg=document.getElementById('main'),box=[129.3,142.4,30.9,41.6],W=760,{H,P}=proj(box,W);svg.setAttribute('viewBox',`0 0 ${W} ${H|0}`);
