@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="page-version" content="20261101-2330"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="page-version" content="20261101-2335"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ETG-JP｜YMT 充電設備日本站點分佈</title>
 <style>
 :root{--bg:#f6f6f4;--card:#fff;--ink:#1d1d1f;--mute:#6b6b70;--line:#e3e3e0;--acc:#1f4e79;--org:#f78c3c}
@@ -478,7 +478,7 @@ addEventListener('hashchange',route);route();
 (async()=>{try{const cur=document.querySelector('meta[name="page-version"]').content;
  const t=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text();
  const m=t.match(/name="page-version" content="([^"]+)"/);
- if(m&&m[1]!==cur&&!sessionStorage.getItem('pv-'+m[1])){sessionStorage.setItem('pv-'+m[1],1);location.reload()}}catch(e){}})();
+ if(m&&m[1]!==cur&&!sessionStorage.getItem('pv-'+m[1])){sessionStorage.setItem('pv-'+m[1],1);location.replace(location.pathname+'?v='+m[1]+location.hash)}}catch(e){}})();
 </script><script>
 document.querySelectorAll('.cp').forEach(b=>b.onclick=async()=>{const t=b.dataset.c;let ok=false;
  try{await navigator.clipboard.writeText(t);ok=true}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{ok=document.execCommand('copy')}catch(_){}a.remove()}
