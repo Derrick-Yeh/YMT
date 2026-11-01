@@ -65,6 +65,36 @@ tr.sec td{background:#f4f4f1;font-weight:600;font-size:12px;cursor:default}.kpi.
 .kpi.b{border-color:#b7dfc2;background:#f3faf5}.kpi.b b{color:#2b8a3e}
 .bchips{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}.bchips button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;font:inherit;text-align:left;min-width:190px}.bchips button b{display:block;font-size:18px}.bchips button small{color:var(--mute);font-size:12px}.bchips button.on{border-color:var(--acc);box-shadow:inset 0 -3px 0 var(--acc)}.bchips button.bb b{color:#2b8a3e}.bchips button.bb.on{border-color:#2b8a3e;box-shadow:inset 0 -3px 0 #2b8a3e}
 .dnote{margin-top:5px;font-size:12px;color:#7a3e00;background:#fff4e6;border:1px solid #ffd8a8;border-radius:6px;padding:4px 8px;white-space:normal;text-align:left;font-weight:500}
+
+/* readability & color banding */
+body{font-size:15px;line-height:1.55}
+h1{font-size:20px}header p{font-size:13px}nav a{font-size:15px}
+.card h2{font-size:17px;line-height:1.5}
+table{font-size:14px}th{font-size:13.5px}
+.note{font-size:13px;line-height:1.65}.asm{font-size:13.5px;line-height:1.8}
+.addr{font-size:13px}.tag{font-size:12px}.badge{font-size:12px}
+.sum{font-size:14.5px}.sum th{font-size:14px;padding:10px}.sum td{padding:10px 12px}
+.sum td small{font-size:12.5px}
+#sum th.hA{background:#1f4e79;color:#fff;font-size:16px;font-weight:700}
+#sum th.hB{background:#2b8a3e;color:#fff;font-size:16px;font-weight:700}
+#sum th.hA span,#sum th.hB span{color:#eaf2fb!important;font-size:13.5px}
+#sum th.sA{background:#dbe7f4;color:#1f4e79;font-weight:600}
+#sum th.sB{background:#d8efdf;color:#1f6b33;font-weight:600}
+#sum td.ca{background:#f5f9fd}#sum td.cb{background:#f4faf6}
+#sum tr.alt td.ca{background:#e8f0f9}#sum tr.alt td.cb{background:#e6f4ea}
+#sum th{position:static}#sum td.st{min-width:190px;width:19%}#sum td.ca,#sum td.cb{word-break:keep-all}#sum div[style*='nowrap']{white-space:normal!important}#sum td.st .dnote{max-width:none}
+#sum td.dt{background:#fafaf7;font-size:15.5px;white-space:nowrap}
+#sum tr.alt td.dt{background:#efefea}
+#sum td.dt.we b{color:#c92a2a}
+#sum tr.tot td{background:#343a40!important;color:#fff;font-size:15.5px}
+#sum .tm2{display:inline-block;min-width:46px;font-weight:700;color:#c2410c}
+#sum td.cb .tm2{color:#2b6b3a}#sum td.ca .tm2{color:#1f4e79}
+.dnote{font-size:13px;line-height:1.55}
+.tl .r{font-size:14px}.tl .mv{font-size:13px}.day .dh b{font-size:16.5px}.day .dh small{font-size:12.5px}
+.day:nth-child(even) .tl{background:#fbfbf9}
+.sum tbody tr:nth-child(even) td{background:#f7f7f4}
+#tb tr:nth-child(even) td,#ptb tr:nth-child(even) td{background:#f8f8f5}
+.bars div{font-size:14px}.kpi span{font-size:13px}.plist button small{font-size:13px}
 </style></head><body>
 <header><h1>YMT（ヤマト運輸）充電設備 日本站點分佈</h1><p>ETG-JP｜資料：站點清單 2026/10/23，<b>原有站點依 YMT 2026/10/30 實際狀況更新</b>｜檢查排程依 YMT 日程計畫表 <b>2026/10/30 實際狀況＋11/1 時段修正</b>；十月第一批依營業所彙總（11/1）｜<b style="color:#2b8a3e">十月第一批出貨：1014 出荷指示データ（34 站／196 台），與原有站點分開標示</b></p>
 <nav><a href="#overview" data-v="overview">全國總覽</a><a href="#prefs" data-v="prefs">各都縣</a><a href="#list" data-v="list">站點清單</a><a href="#tokyo" data-v="tokyo">檢查排程（A、B組）</a></nav></header>
@@ -109,7 +139,7 @@ tr.sec td{background:#f4f4f1;font-weight:600;font-size:12px;cursor:default}.kpi.
  <tr><td>當日窗口</td><td style="text-align:left">足立西保木間、板橋北、足立新田、杉並南荻窪</td><td style="text-align:left">11/3 四站 YMT 聯絡人已提供（請見日程計畫表，不公開於網頁）</td><td style="text-align:left">其餘站點 YMT 確認中</td></tr>
  </tbody></table>
  <div class="note"><b>11/1 修正版已排入：</b>栃木センター（B 組 11/9）、東京港主管支店（A 組 11/6）、小岩（A 組 11/9）。<b>已依 YMT 日程計畫表 11/1 版確認：</b>港天王洲 11/6、東浦和 11/7、外縣市寄回設備 11/10～11/12。<br>註：日程計畫表統計欄「11/9～11/12 A 組 12 站 58 台」為手填數字，未隨ＧＭ推進課改為 11 台而更新，實際應為 53 台。</div></div>
- <div class="card" style="margin-bottom:14px"><h2>檢查排程 總表（現場 11/3～11/13＋A 組東京集中 11/10～11/12｜兩組各 3 人｜各站開始時間依 YMT 日程計畫表｜<span class="tag b">十月第一批</span>＝1014 出荷指示批次）</h2><table class="sum" id="sum"></table>
+ <div class="card" style="margin-bottom:14px"><h2>檢查排程 總表（現場 11/3～11/13＋A 組東京集中 11/10～11/12｜兩組各 3 人｜各站開始時間依 YMT 日程計畫表｜<span class="tag b">十月第一批</span>＝1014 出荷指示批次）</h2><div style="overflow-x:auto"><table class="sum" id="sum"></table></div>
   <div class="note">時間＝YMT 指定的開始時間；結束時間以每台約 12 分鐘（3 人）估算。11/8（日）兩組休息日。十月第一批依「營業所彙總」（11/1）現場排入 13 站 80 台（A 組 5 站 23 台、B 組 8 站 57 台），其餘 21 站 116 台寄回東京，11/16～11/20 集中檢查。</div></div></div>
  <div class="card" style="margin-bottom:14px"><h2>11/10～11/12（A 組）東京返送設備＋ＧＭ推進課｜12 站／53 台</h2>
  <div class="note" style="margin:0 0 8px;font-size:12px">作業時間 09:00–17:00（3 天，依 YMT 日程計畫表 11/1 版）。作業地點：<b>如可行，借用ヤマト銀座本社空間進行</b>（YMT 確認中）。外縣市 11 站共 42 台寄回東京統一檢查；ＧＭ推進課 11 台由 A 組處理（10/30 更新：16→11 台，地址＝銀座本社 中央区銀座2-16-10）。B 組 11/10～11/12 處理十月第一批（東京・神奈川・埼玉・栃木）。</div>
@@ -264,7 +294,7 @@ function renderSched(SC,sfx,single){const G=Object.keys(SC);const col={'A組':'#
  const sites=d=>d.rows.filter(r=>r.type==='work');
  const dep=d=>d.rows.find(r=>r.type==='dep').time, end=d=>d.rows.find(r=>r.type==='end').time, aft=d=>d.rows.find(r=>r.type==='after');
  const arrOf=(d,site)=>{const m=d.rows.find(r=>r.type==='move'&&r.to===site);return m?m.arr:''};
- const apCell=(d,second)=>{const ws=sites(d).filter((w,i)=>w.ses?w.ses===(second?'PM':'AM'):(i===(second?1:0)));return ws.length?ws.map(w=>`<div style="white-space:nowrap">${w.segs[0][0]} ${w.site.replace('営業所','')} ${w.n} 台${w.b1?B1T:''}${GM_(w)}</div>`).join(''):'<span style="color:var(--mute)">—</span>'};
+ const apCell=(d,second)=>{const ws=sites(d).filter((w,i)=>w.ses?w.ses===(second?'PM':'AM'):(i===(second?1:0)));return ws.length?ws.map(w=>`<div style="white-space:nowrap;margin:2px 0"><b class="tm2">${w.segs[0][0]}</b> ${w.site.replace('営業所','')} ${w.n} 台${w.b1?B1T:''}${GM_(w)}</div>`).join(''):'<span style="color:var(--mute)">—</span>'};
  const NC=3;
  let h='<tr><th>日期</th>'+G.map(g=>`<th colspan="${NC}" style="color:${col[g]}">${g}<span style="font-weight:400;color:var(--mute);margin-left:6px">（${MEM[g]}）</span></th>`).join('')+'</tr><tr><th></th>'+G.map(()=>'<th>站點（台數）</th><th>上午</th><th>下午</th>').join('')+'</tr>';
  dates.forEach((dt,i)=>{h+=`<tr><td><b>${dt}</b></td>`+G.map(g=>{const d=SC[g].find(x=>x.date===dt);const off=OFF[sfx+'|'+g+'|'+dt];if(!d)return off==='休息日'?`<td colspan="${NC}" style="color:#495057;background:#f1f3f5;font-weight:600">休息日</td>`:off?`<td colspan="${NC}" style="color:${off.startsWith('銀座')?'#1f4e79':'#c2410c'};background:${off.startsWith('銀座')?'#eef4fa':'#fff4e6'}">${off.startsWith('銀座')?'🏢':'✕'} ${off}</td>`:`<td colspan="${NC}" style="color:var(--mute)">—（無排程，可當緩衝）</td>`;
@@ -273,6 +303,13 @@ function renderSched(SC,sfx,single){const G=Object.keys(SC);const col={'A組':'#
   return`<td class="dep">${dep(d)}<small>${d.start}</small></td>${st}<td>${end(d)}${aft(d)?`<small>→ ${aft(d).to}<br>約 ${aft(d).arr} 抵達</small>`:''}</td>`}).join('')+'</tr>'});
  h+='<tr><td><b>合計</b></td>'+G.map(g=>{const u=SC[g].reduce((a,d)=>a+d.units,0);const n=new Set(SC[g].flatMap(d=>sites(d).map(w=>w.site))).size;return`<td colspan="${NC}"><b>${n} 站／${u} 台</b></td>`}).join('')+'</tr>';
  document.getElementById('sum'+sfx).innerHTML=h;
+ {const T=document.getElementById('sum'+sfx);const trs=[...T.querySelectorAll('tr')];
+  trs[0]&&[...trs[0].children].forEach((c,i)=>{if(i>0)c.classList.add(i===1?'hA':'hB')});
+  trs[1]&&[...trs[1].children].forEach((c,i)=>{if(i>0)c.classList.add(i<=3?'sA':'sB')});
+  let k=0;trs.slice(2).forEach(tr=>{const cs=[...tr.children];if(!cs.length)return;
+   if(cs[0].innerText.trim()==='合計'){tr.classList.add('tot');return}
+   if(k++%2)tr.classList.add('alt');cs[0].classList.add('dt');if(/（[六日]）/.test(cs[0].innerText))cs[0].classList.add('we');
+   let col=0;cs.slice(1).forEach(c=>{const sp=+(c.getAttribute('colspan')||1);c.classList.add(col<3?'ca':'cb');if(sp===1&&col%3===0)c.classList.add('st');col+=sp})})}
  const box=document.getElementById('days'+sfx);
  G.forEach(g=>{const c=document.createElement('div');c.className=g==='A組'?'gA':'gB';
   c.innerHTML=`<div class="gh"><i></i><b>${g}</b><span style="font-size:12px;color:var(--mute)">（${MEM[g]}）</span></div>`+SC[g].map(d=>`<div class="day"><div class="dh"><span><b>${d.date}</b><span class="badge">${d.area}</span><br><small style="color:var(--mute)">${d.line}</small>${d.note?`<div class="dnote">📌 ${d.note}</div>`:''}</span></div><div class="tl">`+
