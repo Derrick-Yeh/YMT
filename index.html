@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="page-version" content="20261101-2105"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ETG-JP｜YMT 充電設備日本站點分佈</title>
 <style>
 :root{--bg:#f6f6f4;--card:#fff;--ink:#1d1d1f;--mute:#6b6b70;--line:#e3e3e0;--acc:#1f4e79;--org:#f78c3c}
@@ -420,4 +420,10 @@ renderSched({"A組": [{"area": "北（足立）", "line": "東京メトロ日比
 function route(){const v=['overview','prefs','list','tokyo'].includes(location.hash.slice(1))?location.hash.slice(1):'overview';
  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v))}
 addEventListener('hashchange',route);route();
+</script><script>
+/* 固定網址也能自動取得最新版：載入後比對伺服器版本，不同就重新整理 */
+(async()=>{try{const cur=document.querySelector('meta[name="page-version"]').content;
+ const t=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text();
+ const m=t.match(/name="page-version" content="([^"]+)"/);
+ if(m&&m[1]!==cur&&!sessionStorage.getItem('pv-'+m[1])){sessionStorage.setItem('pv-'+m[1],1);location.reload()}}catch(e){}})();
 </script></body></html>
