@@ -254,6 +254,7 @@ fp.onchange=renderList;fc.onchange=renderList;document.getElementById('fq').onin
 document.querySelectorAll('#v-list th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;sd=sk===k?-sd:(k==='n'?-1:1);sk=k;renderList()});renderList();
 
 // schedule renderer
+const MEM={'A組':'家偉、韻華1、韻華2','B組':'marco、阿聰、亞文'};
 const siteOf=w=>w.b1?SB.find(s=>s.name===w.site||s.short===w.site):S.find(s=>s.short===w.site);
 const GM_=w=>{const a=(siteOf(w)||{}).addr;return a?`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a)}" target="_blank" rel="noopener" title="Google Map：${a}" style="text-decoration:none;margin-left:4px">📍</a>`:''};
 const B1T='<span class="tag b" style="margin-left:4px">十月第一批</span>';
@@ -265,7 +266,7 @@ function renderSched(SC,sfx,single){const G=Object.keys(SC);const col={'A組':'#
  const arrOf=(d,site)=>{const m=d.rows.find(r=>r.type==='move'&&r.to===site);return m?m.arr:''};
  const apCell=(d,second)=>{const ws=sites(d).filter((w,i)=>w.ses?w.ses===(second?'PM':'AM'):(i===(second?1:0)));return ws.length?ws.map(w=>`<div style="white-space:nowrap">${w.segs[0][0]} ${w.site.replace('営業所','')} ${w.n} 台${w.b1?B1T:''}${GM_(w)}</div>`).join(''):'<span style="color:var(--mute)">—</span>'};
  const NC=3;
- let h='<tr><th>日期</th>'+G.map(g=>`<th colspan="${NC}" style="color:${col[g]}">${g}</th>`).join('')+'</tr><tr><th></th>'+G.map(()=>'<th>站點（台數）</th><th>上午</th><th>下午</th>').join('')+'</tr>';
+ let h='<tr><th>日期</th>'+G.map(g=>`<th colspan="${NC}" style="color:${col[g]}">${g}<span style="font-weight:400;color:var(--mute);margin-left:6px">（${MEM[g]}）</span></th>`).join('')+'</tr><tr><th></th>'+G.map(()=>'<th>站點（台數）</th><th>上午</th><th>下午</th>').join('')+'</tr>';
  dates.forEach((dt,i)=>{h+=`<tr><td><b>${dt}</b></td>`+G.map(g=>{const d=SC[g].find(x=>x.date===dt);const off=OFF[sfx+'|'+g+'|'+dt];if(!d)return off==='休息日'?`<td colspan="${NC}" style="color:#495057;background:#f1f3f5;font-weight:600">休息日</td>`:off?`<td colspan="${NC}" style="color:${off.startsWith('銀座')?'#1f4e79':'#c2410c'};background:${off.startsWith('銀座')?'#eef4fa':'#fff4e6'}">${off.startsWith('銀座')?'🏢':'✕'} ${off}</td>`:`<td colspan="${NC}" style="color:var(--mute)">—（無排程，可當緩衝）</td>`;
   const st=`<td style="text-align:left"><span class="badge" style="margin:0 0 4px">${d.area}</span><br>${sites(d).map(w=>w.site.replace('営業所','')+' '+w.n+(w.b1?B1T:'')).join('<br>')}<small>共 ${d.units} 台</small>${d.note?`<div class="dnote">📌 ${d.note}</div>`:''}</td>`;
   return`${st}<td style="text-align:left">${apCell(d,false)}</td><td style="text-align:left">${apCell(d,true)}</td>`;
@@ -274,7 +275,7 @@ function renderSched(SC,sfx,single){const G=Object.keys(SC);const col={'A組':'#
  document.getElementById('sum'+sfx).innerHTML=h;
  const box=document.getElementById('days'+sfx);
  G.forEach(g=>{const c=document.createElement('div');c.className=g==='A組'?'gA':'gB';
-  c.innerHTML=`<div class="gh"><i></i><b>${g}</b><span style="font-size:12px;color:var(--mute)">（3 人）</span></div>`+SC[g].map(d=>`<div class="day"><div class="dh"><span><b>${d.date}</b><span class="badge">${d.area}</span><br><small style="color:var(--mute)">${d.line}</small>${d.note?`<div class="dnote">📌 ${d.note}</div>`:''}</span></div><div class="tl">`+
+  c.innerHTML=`<div class="gh"><i></i><b>${g}</b><span style="font-size:12px;color:var(--mute)">（${MEM[g]}）</span></div>`+SC[g].map(d=>`<div class="day"><div class="dh"><span><b>${d.date}</b><span class="badge">${d.area}</span><br><small style="color:var(--mute)">${d.line}</small>${d.note?`<div class="dnote">📌 ${d.note}</div>`:''}</span></div><div class="tl">`+
    d.rows.filter(r=>r.type!=='dep').map(r=>r.type==='move'?`<div class="r mv"><span class="tm">${r.dep}–${r.arr}</span><span>🚃 ${r.frm==='上野'?'上野站':r.frm} → ${r.to}（約 ${r.mins} 分）<span class="rt">${r.route}</span></span></div>`:
     r.type==='work'?`<div class="r w"><span class="tm">${r.segs.map(s=>s[0]+'–'+s[1]).join('<br>')}</span><span><b>${r.site}</b>${r.b1?B1T:''}　檢查 ${r.n} 台${r.part?'<span class="badge">'+r.part.replace(/[（）]/g,'')+'</span>':''}<br><span class="addr">${(siteOf(r)||{}).addr||''}${GM_(r)}</span></span></div>`:
     r.type==='after'?`<div class="r mv"><span class="tm">${r.dep}–${r.arr}</span><span>${r.to.includes('住宿')?'🏨':'🚄'} 收工後 → ${r.to}（約 ${r.mins} 分）<span class="rt">${r.route}</span></span></div>`:
@@ -321,7 +322,7 @@ function renderSched(SC,sfx,single){const G=Object.keys(SC);const col={'A組':'#
  function combinedCard(g){const all=SC[g].map((d,i)=>i);const inIn=i=>isMetro(SC[g][i])&&!(!single&&g==='A組'&&sites(SC[g][i]).some(w=>w.site==='東青梅'));const tk=all.filter(inIn),ot=all.filter(i=>!inIn(i));const pf=new Set(tk.flatMap(i=>sites(SC[g][i]).map(w=>(siteOf(w)||{}).pref)));const ZN=['東京都','神奈川県','埼玉県'].filter(p=>pf.has(p)).map(p=>p.replace('県','')).join('・');
   const card=document.createElement('div');card.className='card';card.style.marginBottom='14px';
   const tot=SC[g].reduce((a,d)=>a+d.units,0),ns=new Set(SC[g].flatMap(d=>sites(d).map(w=>w.site))).size;
-  card.innerHTML=`<h2 style="color:${col[g]}">● ${g} 全行程路線圖（東京都＋${single?'神奈川・埼玉・新潟・福島':(g==='A組'?'新潟・埼玉・茨城':'神奈川・埼玉・福島・栃木')}，每日回上野）｜${ns} 站／${tot} 台</h2><div class="g2"><div><svg></svg><div class="legend"></div></div><div><table class="sum" style="font-size:12px"><thead><tr><th>日期／方位</th><th>拜訪順序／線路</th><th>收工／之後</th></tr></thead><tbody></tbody></table></div></div>`;
+  card.innerHTML=`<h2 style="color:${col[g]}">● ${g}（${MEM[g]}）全行程路線圖（東京都＋${single?'神奈川・埼玉・新潟・福島':(g==='A組'?'新潟・埼玉・茨城':'神奈川・埼玉・福島・栃木')}，每日回上野）｜${ns} 站／${tot} 台</h2><div class="g2"><div><svg></svg><div class="legend"></div></div><div><table class="sum" style="font-size:12px"><thead><tr><th>日期／方位</th><th>拜訪順序／線路</th><th>收工／之後</th></tr></thead><tbody></tbody></table></div></div>`;
   RB.appendChild(card);const svg=card.querySelector('svg');
   const kOf={};let kk=0;SC[g].forEach((d,di)=>sites(d).forEach(w=>{kk++;kOf[di+'|'+w.site]=kk}));
   const site=w=>siteOf(w);
